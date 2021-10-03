@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CARDANO SIMULATION</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link th:href="@{/styles/styles.css}" rel="stylesheet" />
+</head>
+<body>
+
+	<h1>HOW TO BUY</h1>
+
+	<ol>
+		<li>Choose the quantity you would like to purchase</li>
+		<li>Send the correct amount of ADA to the wallet address below</li>
+		<li>Wait to receive the NFTs in your wallet</li>
+	</ol>
+
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var tokenPrice = /*[[${tokenPrice}]]*/0;
+		function updateTotalPrice() {
+			document.getElementById('amountAda').value = document
+					.getElementById('quantity').value
+					* tokenPrice;
+		}
+		/*]]>*/
+	</script>
+
+	<table>
+		<tbody>
+			<tr>
+				<td>Quantity</td>
+				<td>
+					<select id="quantity" name="quantity" onchange="updateTotalPrice()">
+						<option th:each="i : ${#numbers.sequence(1, tokenMaxAmount)}" th:value="${i}" th:text="${i}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Address</td>
+				<td>
+					<span th:text="${paymentAddress}"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Amount in ADA</td>
+				<td>
+					<input id="amountAda" name="amountAda" th:value="${tokenPrice}" disabled="disabled">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<h3>Terms &amp; Conditions.</h3>
+	<p>
+		NFTs will be sent to your wallet address once payment is received. We limit maximum quantity to <span th:text="${tokenMaxAmount}"></span> NFTs per Transaction. Please use a Daedalus, Yoroi or Adalite wallet. Thanks
+	</p>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+version: "3.5"
+
+services:
+
+  nft-dropper:
+    image: wutzebaer/nft-dropper:latest
+    volumes:
+      - ./work:/work
+      - ./nft-source:/nft-source
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./templates:/templates
+      - ./static:/static
+    restart: on-failure
+    ports:
+      - 127.0.0.1:8080:8080
+    environment:
+      - token.dir=/nft-source
+      - token.price=10
+      - token.maxAmount=5
+      - seller.address=addr_test1qq487jh48qysllv3d0peafg76gqhp3ys3ycpy94rwza3tk4578p0hapx37mcflefvvwyhwtwn4kt83nkf7wqwx9tvsdshrgzfj
+      - working.dir=/work
+      - cardano-node.container-name=nft-dropper-composed_cardano-node_1
+      - cardano-node.ipc-volume-name=nft-dropper-composed_node-ipc
+      - cardano-db-sync.url=jdbc:postgresql://postgres/cardanochain
+      - cardano-db-sync.username=nft-dropper
+      - cardano-db-sync.password=3y"Rv@dz0#9xI`4Ml^.I
+      - spring.thymeleaf.prefix=file:/templates/
+      - spring.resources.static-locations=file:/static/
+      
+  postgres:
+    image: postgres:11.5-alpine
+    environment:
+      - POSTGRES_LOGGING=true
+      - POSTGRES_DB_FILE=/run/secrets/postgres_db
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_USER_FILE=/run/secrets/postgres_user
+    secrets:
+      - postgres_password
+      - postgres_user
+      - postgres_db
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  cardano-node:
+    image: inputoutput/cardano-node:1.30.1
+    environment:
+      - NETWORK=${NETWORK:-mainnet}
+    volumes:
+      - node-db:/data/db
+      - node-ipc:/ipc
+      - ./work:/work
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  cardano-db-sync:
+    image: inputoutput/cardano-db-sync:11.0.4
+    environment:
+      - NETWORK=${NETWORK:-mainnet}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - RESTORE_SNAPSHOT=${RESTORE_SNAPSHOT:-}
+      - RESTORE_RECREATE_DB=N
+    depends_on:
+      - cardano-node
+      - postgres
+    secrets:
+      - postgres_password
+      - postgres_user
+      - postgres_db
+    volumes:
+      - db-sync-tmp:/tmp
+      - db-sync-data:/var/lib/cdbsync
+      - node-ipc:/node-ipc
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+secrets:
+  postgres_db:
+    file: ./config/secrets/postgres_db
+  postgres_password:
+    file: ./config/secrets/postgres_password
+  postgres_user:
+    file: ./config/secrets/postgres_user
+
+volumes:
+  db-sync-data:
+  db-sync-tmp:
+  postgres:
+  node-db:
+  node-ipc:

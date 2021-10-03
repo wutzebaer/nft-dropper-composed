@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CARDANO SIMULATION</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link th:href="@{/styles/styles.css}" rel="stylesheet" />
+</head>
+<body>
+
+	<h1>CARDANO SIMULATION<h1>
+
+	<h2>ON SALE</h2>
+
+	<h3>A collection of 6000 ADASIMS</h3>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Range</th>
+				<th>Price</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1 - 1000</td>
+				<td><b>XX</b> ₳</td>
+				<td>Sold Out</td>
+			</tr>
+			<tr>
+				<td>1001 - 2000</td>
+				<td><b>XX</b> ₳</td>
+				<td>Sold Out</td>
+			</tr>
+			<tr>
+				<td>2001 - 3000</td>
+				<td><b>XX</b> ₳</td>
+				<td>On Sale <b>(<span th:text="${tokenLeft}"></span> left)</b></td>
+			</tr>
+			<tr>
+				<td>3001 - 4000</td>
+				<td><b>XX</b> ₳</td>
+				<td>Coming Soon</td>
+			</tr>
+			<tr>
+				<td>4001 - 5000</td>
+				<td><b>XX</b> ₳</td>
+				<td>Coming Soon</td>
+			</tr>
+			<tr>
+				<td>5001 - 6000</td>
+				<td><b>XX</b> ₳</td>
+				<td>Coming Soon</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>Hurry there are only <span th:text="${tokenLeft}"></span> AdaSims at <span th:text="${tokenPrice}"></span> ₳ left</p>
+
+	<a th:href="@{buy}">CLICK TO BUY</a>
+</body>
+</html>
