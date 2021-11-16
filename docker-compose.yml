@@ -14,6 +14,7 @@ services:
     ports:
       - 127.0.0.1:8080:8080
     environment:
+      - NETWORK=${NETWORK:-mainnet}
       - token.dir=/nft-source
       - token.price=10
       - token.maxAmount=5
