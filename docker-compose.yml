@@ -6,7 +6,7 @@ services:
     image: wutzebaer/nft-dropper:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${working.dir}:/work
+      - ${WORKING_DIR}:/work
       - ./nft-source:/nft-source
       - ./templates:/templates
       - ./static:/static
@@ -16,11 +16,11 @@ services:
     environment:
       - NETWORK=${NETWORK:-mainnet}
       - token.dir=/nft-source
-      - token.price=${token.price}
-      - token.maxAmount=${token.maxAmount}
-      - seller.address=${seller.address}
-      - working.dir=${working.dir}
-      - cardano-node.ipc-volume-name=${cardano-node.ipc-volume-name}
+      - token.price=${TOKEN_PRICE}
+      - token.maxAmount=${TOKEN_MAX_AMOUNT}
+      - SELLER_ADDRESS=${SELLER_ADDRESS}
+      - working.dir=${WORKING_DIR}
+      - cardano-node.ipc-volume-name=${IPC_VOLUME_NAME}
       - cardano-db-sync.url=jdbc:postgresql://postgres/cardanochain
       - cardano-db-sync.username=nft-dropper
       - cardano-db-sync.password=3y"Rv@dz0#9xI`4Ml^.I
