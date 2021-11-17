@@ -5,28 +5,27 @@ services:
   nft-dropper:
     image: wutzebaer/nft-dropper:latest
     volumes:
-      - ./work:/work
-      - ./nft-source:/nft-source
       - /var/run/docker.sock:/var/run/docker.sock
-      #- ./templates:/templates
-      #- ./static:/static
+      - ${working.dir}:/work
+      - ./nft-source:/nft-source
+      - ./templates:/templates
+      - ./static:/static
     restart: on-failure
     ports:
-      - 127.0.0.1:8080:8080
+      - 8080:8080
     environment:
       - NETWORK=${NETWORK:-mainnet}
       - token.dir=/nft-source
-      - token.price=10
-      - token.maxAmount=5
-      - seller.address=addr_test1qq487jh48qysllv3d0peafg76gqhp3ys3ycpy94rwza3tk4578p0hapx37mcflefvvwyhwtwn4kt83nkf7wqwx9tvsdshrgzfj
-      - working.dir=/work
-      - cardano-node.container-name=nft-dropper-composed_cardano-node_1
-      - cardano-node.ipc-volume-name=nft-dropper-composed_node-ipc
+      - token.price=${token.price}
+      - token.maxAmount=${token.maxAmount}
+      - seller.address=${seller.address}
+      - working.dir=${working.dir}
+      - cardano-node.ipc-volume-name=${cardano-node.ipc-volume-name}
       - cardano-db-sync.url=jdbc:postgresql://postgres/cardanochain
       - cardano-db-sync.username=nft-dropper
       - cardano-db-sync.password=3y"Rv@dz0#9xI`4Ml^.I
-      #- spring.thymeleaf.prefix=file:/templates/
-      #- spring.resources.static-locations=file:/static/
+      - spring.thymeleaf.prefix=file:/templates/
+      - spring.resources.static-locations=file:/static/
       - ipfs.api.url=/dns4/ipfs/tcp/5001
 
   ipfs:
@@ -69,7 +68,6 @@ services:
     volumes:
       - node-db:/data/db
       - node-ipc:/ipc
-      - ./work:/work
     restart: on-failure
     logging:
       driver: "json-file"
