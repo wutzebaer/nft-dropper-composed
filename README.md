@@ -1,4 +1,4 @@
-# CNFT Droper
+# CNFT Dropper
 This tool mints NFTs automatically when a buyer sends the minimum amount of ADA. Medium knowledge of sever administration and docker is required.
 
 It is also possible to run it as-a-service FOR FREE just ask for on telegram https://t.me/joinchat/XrlIF21NDzAyODUy
