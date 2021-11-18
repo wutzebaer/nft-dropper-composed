@@ -25,7 +25,7 @@ https://github.com/wutzebaer/nft-dropper-composed.git
 # Testnet or mainnet
 NETWORK=testnet
 # Absolute path where keys/policy files etc. are generated and stored
-WORKING_DIR=/mnt/c/tmp/nft-dropper-composed
+WORKING_DIR_EXTERNAL=/home/peter/nft-dropper-composed/work
 # Your price for one token
 TOKEN_PRICE=10
 # Maximum tokens to buy per transaction
