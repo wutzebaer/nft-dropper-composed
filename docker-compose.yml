@@ -28,8 +28,8 @@ services:
       - spring.thymeleaf.prefix=file:/templates/
       - spring.resources.static-locations=file:/static/
       - ipfs.api.url=/dns4/ipfs/tcp/5001
-      - hcaptcha.sitekey=
-      - hcaptcha.secret=
+      - hcaptcha.sitekey=${HCAPTCHA_SITEKEY}
+      - hcaptcha.secret=${HCAPTCHA_SECRET}
       - spring.datasource.url=jdbc:h2:file:/work/database
 
   ipfs:
