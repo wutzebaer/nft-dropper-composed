@@ -31,6 +31,7 @@ services:
       - hcaptcha.sitekey=${HCAPTCHA_SITEKEY}
       - hcaptcha.secret=${HCAPTCHA_SECRET}
       - spring.datasource.url=jdbc:h2:file:/work/database
+      - use.captcha={USE_CAPTCHA}
 
   ipfs:
       image: ipfs/go-ipfs
