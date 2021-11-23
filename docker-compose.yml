@@ -26,7 +26,7 @@ services:
       - cardano-db-sync.username=nft-dropper
       - cardano-db-sync.password=3y"Rv@dz0#9xI`4Ml^.I
       - spring.thymeleaf.prefix=file:/templates/
-      - spring.resources.static-locations=file:/static/
+      - spring.web.resources.static-locations=file:/static/
       - ipfs.api.url=/dns4/ipfs/tcp/5001
       - hcaptcha.sitekey=${HCAPTCHA_SITEKEY}
       - hcaptcha.secret=${HCAPTCHA_SECRET}
