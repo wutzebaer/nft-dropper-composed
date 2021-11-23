@@ -38,3 +38,17 @@ var interval = setInterval(function() {
 		});
 	}
 }, 100);
+
+$(document).ready(function() {
+	const clipboard = new ClipboardJS('.btn-clipboard');
+	clipboard.on('success', function(e) {
+		console.info('Text:', e.text);
+		$('#copy-button').attr('title', 'Address copied');
+		$('#copy-button').tooltip('show');
+		$('#copy-button').on('mouseout', function() {
+			$('#copy-button').tooltip('dispose');
+		})
+		e.clearSelection();
+	});
+});
+
