@@ -7,14 +7,18 @@ setInterval(function() {
 	});
 }, 1000);
 
-setInterval(function() {
-	$.ajax({
-		url: "api/addressTokensLeft?address=" + $("#address").text(),
-		success: function(result) {
-			$("#addressTokensLeft").text(result);
+if (useCaptcha) {
+	setInterval(function() {
+		if ($("#address").text()) {
+			$.ajax({
+				url: "api/addressTokensLeft?address=" + $("#address").text(),
+				success: function(result) {
+					$("#addressTokensLeft").text(result);
+				}
+			});
 		}
-	});
-}, 1000);
+	}, 1000);
+}
 
 
 var interval = setInterval(function() {
@@ -42,13 +46,11 @@ var interval = setInterval(function() {
 $(document).ready(function() {
 	const clipboard = new ClipboardJS('.btn-clipboard');
 	clipboard.on('success', function(e) {
-		console.info('Text:', e.text);
-		$('#copy-button').attr('title', 'Address copied');
-		$('#copy-button').tooltip('show');
-		$('#copy-button').on('mouseout', function() {
-			$('#copy-button').tooltip('dispose');
+		console.log(e)
+		$(e.trigger).tooltip('show');
+		$(e.trigger).on('mouseout', function() {
+			$(e.trigger).tooltip('dispose');
 		})
 		e.clearSelection();
 	});
 });
-
